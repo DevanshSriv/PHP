@@ -1,6 +1,7 @@
 <?php
 $a='PHP';
-echo "Welcome to ".$a;
+$b=44;
+echo "Welcome to ".$a." ".$b;
 
 
 ?>
