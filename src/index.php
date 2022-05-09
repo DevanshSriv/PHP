@@ -1,25 +1,12 @@
 <?php
-function days($a){
-    switch($a){
-        case 1:echo "Monday";
-               break;
-        case 2:echo "Tuesday";
-               break;
-        case 3:echo "Wednesday";
-               break;       
-        case 4:echo "Thursday";
-               break;
-        case 5:echo "Friday";
-               break;
-        case 6:echo "Saturday";
-               break;
-        case 7:echo "Sunday";
-               break;
-        default:echo "Invalid";
+function fact($a){
+    $f=1;
+    for($i=1;$i<=$a;$i++){
+        $f*=$i;
     }
-    
+    echo $f;
 }
-days(2);
+fact(5);
 
 
 ?>
