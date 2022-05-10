@@ -89,22 +89,27 @@ foreach($products as $prKey => $catogry){
    
     foreach($catogry as $subCat=>$subVal)
     {
-       
-    foreach($subVal as $subAr=>$ar)
-    {   echo '<td>'.$prKey.'</td>';
-        echo '<td>'.$subCat.'</td>';
-        foreach($ar as $rem)
-        {
-        echo '<td>'.$rem.'</td>';
+       if($subCat == "Mobile"){
+        foreach($subVal as $subAr=>$ar)
+        {   echo '<td>'.$prKey.'</td>';
+            
+            echo '<td>'.$subCat.'</td>';
+            foreach($ar as $rem)
+            {
+            echo '<td>'.$rem.'</td>';
+            
+            }
+        
+            echo '</tr>';
         
         }
-       
-        echo '</tr>';
-    
-    }
+        }
     
    }
+
+   
 }
+
     
 echo '</table>';
  
