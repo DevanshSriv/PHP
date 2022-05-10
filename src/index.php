@@ -82,11 +82,10 @@ $as=array();
         foreach($catogry as $subCat=>&$subVal)
          
         {
-            foreach($subVal as $ar)
+            foreach($subVal as &$ar)
             {   
                 if($ar['id']==$id){
-                    $key=count($ar);
-                    unset($subVal[$key-1]);
+                    $ar['name']='BIG-555';
   
                  }
   
@@ -98,7 +97,7 @@ $as=array();
    var_dump($products);
 }
 
-filterr('PR003');
+filterr('PR002');
 
  
 ?>
