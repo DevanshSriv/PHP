@@ -1,20 +1,27 @@
 <?php
-function insert($pos,$val){
-   static $arr=array(1,2,3,4,5,6);
+function temperature($list){
+  $s=0;
+  $l=count($list);
+  $s=array_sum($list);
+ $avg=$s/$l;
+  
+  echo "Average Temperature is: ".$avg;
 
-   echo "Original Array:"."<br>";
-   foreach($arr as $x){
-       echo $x." ";
-   }
+  asort($list);
+  echo "<br>List of seven lowest temperatures: ";
+  for($i=0;$i<7;$i++){
+    echo " ".$list[$i];
+  }
 
-   array_splice($arr,$pos-1,0,$val);
-   echo "<br>After inserting:"."<br>";
-   foreach($arr as $x){
-       echo $x." ";
-   }
+  rsort($list);
+  echo "<br>List of seven highest temperatures: ";
+  for($i=0;$i<7;$i++){
+    echo " ".$list[$i];
+  }
    
 }
-insert(3,44);
+$arr= array(1,2,3,4,5,6,7,8,9,10,11,55,12,78,32);
+temperature($arr);
 
 
 ?>
