@@ -74,32 +74,31 @@ $products = array(
     )
         );
 
-function filterr($brand){
+function filterr($id){
 global $products;
-    foreach($products as $prKey => $catogry){
+$as=array();
+    foreach($products as $prKey => &$catogry){
 
-    
-        foreach($catogry as $subCat=>$subVal)
+        foreach($catogry as $subCat=>&$subVal)
+         
         {
-            foreach($subVal as $subAr=>$ar)
+            foreach($subVal as $ar)
             {   
-                if($ar['brand']==$brand){
-                    foreach($ar as $key=>$val){
-                        echo $key." :".$val."<br>";
-                        
-                    }
-                    echo "Catogry: ".$subCat."<br>";
-                    echo "<br>";
-                } 
-                
+                if($ar['id']==$id){
+                    $key=count($ar);
+                    unset($subVal[$key-1]);
+  
+                 }
+  
             }
 
+        }
+ 
     }
-
-    }
+   var_dump($products);
 }
 
-filterr('Apple')
+filterr('PR003');
 
  
 ?>
