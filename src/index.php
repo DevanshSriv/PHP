@@ -74,43 +74,32 @@ $products = array(
     )
         );
 
-echo "<table border=1px solid black>";
-echo '<tr>';
- 
-echo '<td>Catogry</td>';
-echo '<td>Sub-Catogry</td>';
-echo '<td>ID</td>';
-echo '<td>Name</td>';
-echo '<td>Brand</td>';
-echo '</tr>';
+function filterr($brand){
+global $products;
+    foreach($products as $prKey => $catogry){
 
-foreach($products as $prKey => $catogry){
-    echo'<tr>';
-   
-    foreach($catogry as $subCat=>$subVal)
-    {
-       if($subCat == "Mobile"){
-        foreach($subVal as $subAr=>$ar)
-        {   echo '<td>'.$prKey.'</td>';
-            
-            echo '<td>'.$subCat.'</td>';
-            foreach($ar as $rem)
-            {
-            echo '<td>'.$rem.'</td>';
-            
-            }
-        
-            echo '</tr>';
-        
-        }
-        }
     
-   }
+        foreach($catogry as $subCat=>$subVal)
+        {
+            foreach($subVal as $subAr=>$ar)
+            {   
+                if($ar['brand']==$brand){
+                    foreach($ar as $key=>$val){
+                        echo $key." :".$val."<br>";
+                        
+                    }
+                    echo "Catogry: ".$subCat."<br>";
+                    echo "<br>";
+                } 
+                
+            }
 
-   
+    }
+
+    }
 }
 
-    
-echo '</table>';
+filterr('Apple')
+
  
 ?>
