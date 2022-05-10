@@ -1,17 +1,13 @@
 <?php
-echo "<table border=1px solid black>";
-for($row=1;$row<=8;$row++){
-    echo "<tr>";
-    for($col=1;$col<=8;$col++){
-        if(($row+$col)%2==0){
-            echo "<td width=30px height=30px bgcolor=white></td>";
-        }
-        else{
-            echo "<td width=30px height=30px bgcolor=black></td>";
-        }
-    }
-    echo "</tr>";
+function insert($pos,$val){
+   static $arr=array(1,2,3,4,5,6);
+
+   array_splice($arr,$pos,0,$val);
+   var_dump($arr);
+   
 }
-echo "</table>";
+insert(3,44);
+echo "<br>";
+insert(1,77);
 
 ?>
