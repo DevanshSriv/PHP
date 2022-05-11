@@ -1,103 +1,66 @@
 <?php
-$products = array(
-    "Electronics" => array(
-      "Television" => array(
-        array(
-        "id" => "PR001",
-        "name" => "MAX-001",
-        "brand" => "Samsung"
-        ),
-        array(
-        "id" => "PR002",
-        "name" => "BIG-301",
-        "brand" => "Bravia"
-        ),
-        array(
-        "id" => "PR003",
-        "name" => "APL-02",
-        "brand" => "Apple"
-        )
-      ),
-      "Mobile" => array(
-        array(
-        "id" => "PR004",
-        "name" => "GT-1980",
-        "brand" => "Samsung"
-        ),
-        array(
-        "id" => "PR005",
-        "name" => "IG-5467",
-        "brand" => "Motorola"
-        ),
-        array(
-        "id" => "PR006",
-        "name" => "IP-8930",
-        "brand" => "Apple"
-        )
-      )
-    ),
-    "Jewelry" => array(
-      "Earrings" => array(
-        array(
-        "id" => "PR007",
-        "name" => "ER-001",
-        "brand" => "Chopard"
-        ),
-        array(
-        "id" => "PR008",
-        "name" => "ER-002",
-        "brand" => "Mikimoto"
-        ),
-        array(
-        "id" => "PR009",
-        "name" => "ER-003",
-        "brand" => "Bvlgari"
-        )
-      ),
-      "Necklaces" => array(
-        array(
-        "id" => "PR010",
-        "name" => "NK-001",
-        "brand" => "Piaget"
-        ),
-        array(
-        "id" => "PR011",
-        "name" => "NK-002",
-        "brand" => "Graff"
-        ),
-        array(
-        "id" => "PR012",
-        "name" => "NK-003",
-        "brand" => "Tiffany"
-        )
-      )
-    )
-        );
-
-function filterr($id){
-global $products;
-$as=array();
-    foreach($products as $prKey => &$catogry){
-
-        foreach($catogry as $subCat=>&$subVal)
-         
-        {
-            foreach($subVal as &$ar)
-            {   
-                if($ar['id']==$id){
-                    $ar['name']='BIG-555';
-  
-                 }
-  
-            }
-
-        }
- 
+$unit=$unitErr='';
+$billToPay=0;
+if(isset($_POST)){
+   if(empty($_POST['Unit'])){
+     $unitErr='Cannot Be Null';
+   }
+  else{
+    $unit=test($_POST['Unit']);
+    if(!preg_match('/^[0-9]+$/',$unit)){
+      $unitErr='Invalid Unit';
     }
-   var_dump($products);
+    else{
+     $billToPay=Calc($unit); 
+    }
+   }
+  
 }
 
-filterr('PR002');
+function Calc($b){
+  $sum=0;
+   if($b<=50){
+     $sum=$b*3.50;
+   }
+   elseif($b<150){
+     $sum=50*3.50+($b-50)*4;
+   }
+   elseif($b<200){
+     $sum=50*3.50+100*4+($b-150)*5.20;
+   }
+   elseif($b>250){
+    $sum=50*3.50+100*4+100*5.20+($b-200)*6.50;
+   }
+   return $sum;
+}
+  
+function test($detail){
+$un=trim($detail);
+return $un;
+}
 
- 
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+  .error{color:red;}
+  </style>
+</head>
+<body >
+  <form method='POST' action=<?php echo htmlspecialchars($_SERVER['PHP_SELF']);  ?>>
+    <input type='text' placeholder='Units..' name='Unit'><span class='error'>*
+      <?php  echo $unitErr; ?>
+    </span>
+    <br>
+    <button type='submit' value='submit' style="margin-top:3%">SUBMIT</button>
+    <br>
+    <h2>YOUR BILL IS <?php echo $billToPay;?></h2>
+  </form>
+</body>
+</html>
