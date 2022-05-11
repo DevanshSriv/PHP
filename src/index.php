@@ -1,37 +1,45 @@
 <?php
-$unit=$unitErr='';
-$billToPay=0;
+$res=$num1=$num2=0;
+$ubitErr2=$unitErr1='';
 if(isset($_POST)){
-   if(empty($_POST['Unit'])){
-     $unitErr='Cannot Be Null';
+   if(empty($_POST['num1'])){
+    $unitErr1='required';
    }
+   if(empty($_POST['num2'])){
+     $unitErr2='required';
+    }
   else{
-    $unit=test($_POST['Unit']);
-    if(!preg_match('/^[0-9]+$/',$unit)){
-      $unitErr='Invalid Unit';
+    $num1=test($_POST['num1']);
+    $num2=test($_POST['num2']);
+    if(!preg_match('/^[0-9]+$/',$num1)){
+      $unitErr1='Invalid Unit';
+    }
+    elseif(!preg_match('/^[0-9]+$/',$num2)){
+      $unitErr2='Invalid Unit';
     }
     else{
-     $billToPay=Calc($unit); 
+      $res= Calc($_POST['btn']);
+      
     }
+     
+       
+      
+    
    }
   
 }
 
 function Calc($b){
-  $sum=0;
-   if($b<=50){
-     $sum=$b*3.50;
-   }
-   elseif($b<150){
-     $sum=50*3.50+($b-50)*4;
-   }
-   elseif($b<200){
-     $sum=50*3.50+100*4+($b-150)*5.20;
-   }
-   elseif($b>250){
-    $sum=50*3.50+100*4+100*5.20+($b-200)*6.50;
-   }
-   return $sum;
+  global $num1,$num2;
+       switch($b){
+         case '+':return ($num1+$num2);
+                  break;
+         case '-':return ($num1-$num2);
+         case '*':return ($num1*$num2);
+         case '/':return ($num1/$num2);
+         default: return 00;
+       }
+  
 }
   
 function test($detail){
@@ -54,13 +62,20 @@ return $un;
 </head>
 <body >
   <form method='POST' action=<?php echo htmlspecialchars($_SERVER['PHP_SELF']);  ?>>
-    <input type='text' placeholder='Units..' name='Unit'><span class='error'>*
-      <?php  echo $unitErr; ?>
-    </span>
+    NUMBER1<input type='text' placeholder='Units..' name='num1'><span class='error'>*
+      <?php  echo $unitErr1; ?>
+    </span><br>
+    NUMBER2<input type='text' placeholder='Units..' name='num2'><span class='error'>*
+      <?php  echo $unitErr2; ?>
+    </span><br>
+    Result   <input type='text' placeholder='result..' value=<?php echo $res;?>>
     <br>
-    <button type='submit' value='submit' style="margin-top:3%">SUBMIT</button>
+    <button type='submit' value='+' style="margin-top:3%" name='btn'>+</button>
+    <button type='submit' value='-' style="margin-top:3%" name='btn'>-</button>
+    <button type='submit' value='/' style="margin-top:3%" name='btn'>/</button>
+    <button type='submit' value='*' style="margin-top:3%" name='btn'>*</button>
     <br>
-    <h2>YOUR BILL IS <?php echo $billToPay;?></h2>
+     
   </form>
 </body>
 </html>
