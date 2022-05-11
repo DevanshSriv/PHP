@@ -1,29 +1,55 @@
 <?php 
-$err=$res='';
-$cal=$in=0;
-if(isset($_POST)){
-  if(empty($_POST['input'])){
-    $err='Cannot Be Empty';
+$up=1;
+$res=$err='';
+$target_dir="uploads/";
+$target_file=$target_dir . basename($_FILES["file"]["name"]);
+$fileType=strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+
+if(isset($_POST['submit'])){
+  if(empty($_FILES["file"])){
+    $err='Field is Empty';
   }
   else{
-    $in=$_POST['input'];
-    if(preg_match('/^[A-Za-z]+$/',$in)){
-      $err='Only Numbers';
+    $chk=getimagesize($_FILES['file']['tmp_name']);
+    if($check !== false) {
+      
+      $up = 1;
+    } else {
+      
+      $up = 0;
     }
-    else{
-      $c=$_POST['choice'];
-      if($c=='mins'){
-        $cal=$in*60;
-        $res=$in.'Hr = '.$cal.'mins';
-      }
-      else{
-        $cal=$in*3600;
-        $res=$in.'Hr = '.$cal.'sec';
-      }
-    } 
+  }
+ } 
+
+  
+  if($_FILES['file']['size']>2000000){
+    $err='File too Large';
+    $up=0;
+  }
+  else{
+    $up=1;
+  }
+  if($fileType!='png'){
+    $err='Only PNG';
+    $up=0;
+  }
+  else{
+    $up=1;
   }
 
-}
+  if($up==0){
+    $res='Sorry Cannot Upload';
+  }
+  else{
+       if(move_uploaded_file($_FILES['file']['tmp_name'],$target_file)){
+         $res='Uploaded';
+       }
+       else{
+         $res='Sorry Some error Occured';
+       }
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -33,20 +59,14 @@ if(isset($_POST)){
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>.error{color:red;}</style>
 </head>
 <body>
-  <div style='display:flex;flex-direction:coloumn;justify-content:center;'>
-    <form action='<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>'method='POST'>
-     <input type='text' placeholder='Enter Hours' name='input'><span class='error'>*<?php echo $err; ?></span><br><br>
-     <input type='radio' name='choice' value='mins'>Hours to Min<br><br>
-     <input type='radio' name='choice' value='sec'>Hours to Second<br>
-     <br><br>
-      <?php echo $res; ?><br><br>
-      <input type='submit'  value='CONVERT'> 
-  </form>
- 
-</div>
+  <form action=<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?> method='POST' enctype="multipart/form-data">
+   <input type='file' name='file' id="file"><span class='error'>*</span>
 
+   <input type='submit' value='submit' name='submit'>
+
+</form>
+  <!-- <h1><?php echo $res; ?></h1> -->
 </body>
 </html>
