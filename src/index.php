@@ -1,50 +1,35 @@
 <?php
-$res=$num1=$num2=0;
+$len=$wid=$area=$perimeter=0;
 $ubitErr2=$unitErr1='';
 if(isset($_POST)){
-   if(empty($_POST['num1'])){
+   if(empty($_POST['length'])){
     $unitErr1='required';
    }
-   if(empty($_POST['num2'])){
+   if(empty($_POST['width'])){
      $unitErr2='required';
     }
   else{
-    $num1=test($_POST['num1']);
-    $num2=test($_POST['num2']);
+    $len=test($_POST['length']);
+    $wid=test($_POST['width']);
     if(!preg_match('/^[0-9]+$/',$num1)){
       $unitErr1='Invalid Unit';
     }
     elseif(!preg_match('/^[0-9]+$/',$num2)){
       $unitErr2='Invalid Unit';
     }
-    else{
-      $res= Calc($_POST['btn']);
-      
-    }
-     
-       
-      
+    
+     $area= $len*$wid;
+     $perimeter=2*($len+$wid);
     
    }
-  
 }
 
-function Calc($b){
-  global $num1,$num2;
-       switch($b){
-         case '+':return ($num1+$num2);
-                  break;
-         case '-':return ($num1-$num2);
-         case '*':return ($num1*$num2);
-         case '/':return ($num1/$num2);
-         default: return 00;
-       }
   
-}
-  
-function test($detail){
-$un=trim($detail);
-return $un;
+function test($data){
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
 }
 
 ?>
@@ -60,22 +45,21 @@ return $un;
   .error{color:red;}
   </style>
 </head>
-<body >
-  <form method='POST' action=<?php echo htmlspecialchars($_SERVER['PHP_SELF']);  ?>>
-    NUMBER1<input type='text' placeholder='Units..' name='num1'><span class='error'>*
-      <?php  echo $unitErr1; ?>
-    </span><br>
-    NUMBER2<input type='text' placeholder='Units..' name='num2'><span class='error'>*
-      <?php  echo $unitErr2; ?>
-    </span><br>
-    Result   <input type='text' placeholder='result..' value=<?php echo $res;?>>
-    <br>
-    <button type='submit' value='+' style="margin-top:3%" name='btn'>+</button>
-    <button type='submit' value='-' style="margin-top:3%" name='btn'>-</button>
-    <button type='submit' value='/' style="margin-top:3%" name='btn'>/</button>
-    <button type='submit' value='*' style="margin-top:3%" name='btn'>*</button>
-    <br>
+<body>
+  <div style='display:flex;flex-direction:coloumn;justify-content:center;margin:5%;padding:5%;'>
+  <form method='POST' action=<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?> align ='center'>
+    Length Of Rectangle: <input type='text' name='length'>mtr
+    <br><br>
+    Length Of Width: <input type='text' name='width'>mtr
+    <br><br>
+    <input type='submit' value='Calculate Area And Perimeter' style='padding:2%;background-color:grey;border-radius:5px'>
      
   </form>
+  
+  </div>
+  <div style=' margin:5%;float:left;'>
+<p>Area Of Rectangle: <?php echo $area." sq mtr"; ?></p>
+<p>Perimeter Of Rectangle: <?php echo $perimeter.' mtr'; ?></p>
+</div> 
 </body>
 </html>
