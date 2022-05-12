@@ -1,18 +1,23 @@
 <?php 
+session_start();
+if (!isset($_SESSION['Images']))
+{
+$_SESSION['Images']=array();
+}
 $up=1;
 $res=$err='';
-$target_dir="uploads/";
-$target_file=$target_dir . basename($_FILES["file"]["name"]);
+ $target_dir="uploads/";
+ $target_file=$target_dir . basename($_FILES["file"]["name"]);
 $fileType=strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-
-if(isset($_POST['submit'])){
+ if(isset($_POST)){
+  
   if(empty($_FILES["file"])){
     $err='Field is Empty';
   }
   else{
     $chk=getimagesize($_FILES['file']['tmp_name']);
-    if($check !== false) {
+    if($chk !== false) {
       
       $up = 1;
     } else {
@@ -39,15 +44,19 @@ if(isset($_POST['submit'])){
   }
 
   if($up==0){
-    $res='Sorry Cannot Upload';
+    echo 'Sorry Cannot Upload';
   }
   else{
-       if(move_uploaded_file($_FILES['file']['tmp_name'],$target_file)){
-         $res='Uploaded';
+       if( move_uploaded_file($_FILES['file']['tmp_name'],$target_file)){
+         
+        array_push($_SESSION['Images'],$_FILES['file']['name']);
+       
+        
        }
        else{
-         $res='Sorry Some error Occured';
+         echo 'Sorry Some error Occured';
        }
+       
   }
 
 ?>
@@ -61,12 +70,16 @@ if(isset($_POST['submit'])){
   <title>Document</title>
 </head>
 <body>
-  <form action=<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?> method='POST' enctype="multipart/form-data">
-   <input type='file' name='file' id="file"><span class='error'>*</span>
+  <form action='index.php' method='POST' enctype="multipart/form-data">
+   <br><input type='file' name='file' id="file"><span class='error'>*<?php echo $err;?></span><br><br>
+   
+    <input type='submit' value='submit' name='submit'>
+    <hr>
 
-   <input type='submit' value='submit' name='submit'>
+   <a href='test.php'>push to destroy</a><br>
 
 </form>
-  <!-- <h1><?php echo $res; ?></h1> -->
+   <?php foreach($_SESSION['Images'] as $image){
+        echo "<img src='uploads/".$image."' width='33vw'; height='33vh';>";}; ?>
 </body>
 </html>
