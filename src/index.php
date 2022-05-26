@@ -1,17 +1,28 @@
 <?php
-function filterr($val1,$val2){
-foreach($val2 as $x){
-    if(array_key_exists($x,$val1)){
-        unset($val1[$x]);
+function temperature($list){
+  $s=0;
+  $l=count($list);
+  $s=array_sum($list);
+ $avg=$s/$l;
 
-    }
-    echo "<br>";
+  echo "Average Temperature is: ".$avg;
+  $un=array_unique($list);
+  
+  sort($un);
+  echo "<br>List of seven lowest temperatures: ";
+  for($i=0;$i<7;$i++){
+    echo " ".$un[$i];
+  }
+
+  rsort($un);
+  echo "<br>List of seven highest temperatures: ";
+  for($i=0;$i<7;$i++){
+    echo " ".$un[$i];
+  }
+
 }
-foreach($val1 as $key => $val){
-    echo $key." => ".$val."<br>";
-    
-}
-}
-$array =array('c1' => 'Red', 'c2' => 'Green', 'c3' => 'White', 'c4' => 'Black');
- $array2 =array('c2', 'c4');
- filterr($array,$array2);
+$arr= array(78, 60, 62, 68, 71, 68, 73, 85, 66, 64, 76, 63, 75, 76, 73, 68, 62, 73, 72, 65, 74, 62, 62, 65, 64, 68, 73, 75, 79, 73);
+temperature($arr);
+
+
+?>
