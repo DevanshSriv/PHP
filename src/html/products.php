@@ -55,7 +55,7 @@ foreach($_POST as $key=>$val){
 <body>
 	<?php include 'header.php' ?>
 	<div id="main">
-		<form sction='' method='POST'>
+		<form action='' method='POST'>
 		<div id="products">
 		<?php include 'config.php' ;
 		foreach($products as $prod){
