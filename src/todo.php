@@ -1,0 +1,11 @@
+<?php 
+session_start();
+if(!isset($_SESSION)){
+    $_SESSION['Completed']=array();
+    $_SESSION['Incompleted']=array();
+}
+if(isset($_POST['add'])){
+    $task=$_POST['new-task'];
+    array_push($_SESSION['Incompleted'],$task);
+}
+?>
