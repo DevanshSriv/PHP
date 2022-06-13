@@ -68,7 +68,7 @@ $fileType=strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
   <title>Document</title>
 </head>
 <body>
-  <form action='index.php' method='POST' enctype="multipart/form-data">
+  <form action='' method='POST' enctype="multipart/form-data">
    <br><input type='file' name='file' id="file"><span class='error'>*<?php echo $err;?></span><br><br>
 
     <input type='submit' value='submit' name='submit'>
